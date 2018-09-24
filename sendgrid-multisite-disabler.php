@@ -14,6 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_filter( 'site_option_active_sitewide_plugins', function( $network_active_plugins ) {
 	
+	// Ensure the Network-wide Settings for SendGrid are always visible
+	// This may cause problems with the Network Dashboard sending emails with the way SendGrid currently overrides wp_mail()
 	if ( is_network_admin() ) return $network_active_plugins;
 	
 	// If an appropriate API Key is set, we're good
