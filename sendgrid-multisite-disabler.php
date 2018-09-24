@@ -14,6 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_filter( 'site_option_active_sitewide_plugins', function( $network_active_plugins ) {
 	
+	if ( is_network_admin() ) return $network_active_plugins;
+	
 	// If an appropriate API Key is set, we're good
 	if ( get_option( 'sendgrid_api_key' ) || 
 		get_network_option( null, 'sendgrid_api_key' ) ) return $network_active_plugins;
