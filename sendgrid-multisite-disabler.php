@@ -17,8 +17,10 @@ add_filter( 'site_option_active_sitewide_plugins', function( $network_active_plu
 	if ( is_network_admin() ) return $network_active_plugins;
 	
 	// If an appropriate API Key is set, we're good
-	if ( get_option( 'sendgrid_api_key' ) || 
-		get_network_option( null, 'sendgrid_api_key' ) ) return $network_active_plugins;
+	if ( get_network_option( null, 'sendgrid_api_key' ) ) return $network_active_plugins;
+	
+	// Check against whether per-site API Keys are enabled for Sub Sites, thereby ensuring the Menu is available to even enter a API Key
+	if ( get_option( 'sendgrid_can_manage_subsite' ) ) return $network_active_plugins;
 	
 	// Else, unset the Active Plugin for this site
 	if ( isset( $network_active_plugins['sendgrid-email-delivery-simplified/wpsendgrid.php'] ) ) {
